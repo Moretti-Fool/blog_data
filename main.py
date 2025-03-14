@@ -1,4 +1,5 @@
 from fastapi import FastAPI, HTTPException
+from starlette.responses import RedirectResponse
 from schemas import UserCreate, UserUpdate
 
 
@@ -6,7 +7,9 @@ app = FastAPI()
 users = []
 
 
-
+@app.get("/")
+def root():
+    return RedirectResponse(url="/docs")
 
 @app.post("/users/")
 def create_user(user: UserCreate):
@@ -50,3 +53,4 @@ def delete_user(user_id: int):
     
     users.pop(user_id)
     return {"message": "User deleted successfully"}
+
